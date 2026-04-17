@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg-base: #0d0d0f;
+  --color-accent-red: #8b0000;
+  --color-accent-blue: #2a4d69;
+  --color-text-main: #e0e0e0;
+  --color-text-dim: #7a7a7a;
+  
+  --font-serif: 'Georgia', 'Gowun Batang', serif;
+  --font-mono: 'Courier New', Courier, 'JetBrains Mono', monospace;
+  --font-sans: 'Georgia', 'Gowun Batang', serif;
+}
+
+body {
+  @apply bg-bg-base text-text-main font-serif selection:bg-accent-red selection:text-white;
+}
+
+/* Atmospheric Background Elements */
+.vignette {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.glow-red {
+    position: fixed;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Custom Component Classes from Theme */
+@layer components {
+    .char-card {
+        background: rgba(20, 20, 25, 0.8);
+        border-left: 3px solid var(--color-accent-red);
+        @apply p-4 transition-transform duration-200 hover:-translate-y-1 w-full;
+    }
+
+    .char-card.blue {
+        border-left-color: var(--color-accent-blue);
+    }
+
+    .char-card.gray {
+        border-left-color: #555;
+    }
+
+    .char-name {
+        @apply text-lg mb-1 flex items-center gap-2 font-serif text-text-main;
+    }
+
+    .char-role {
+        @apply font-mono text-[10px] uppercase px-1.5 py-[2px] bg-white/5 text-text-main border rounded-none whitespace-nowrap;
+        border-color: rgba(255,255,255,0.05);
+    }
+
+    .char-desc {
+        @apply text-[13px] leading-[1.4] text-text-dim italic mt-2;
+    }
+
+    .scene-viewport {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        @apply p-8 flex flex-col justify-between w-full;
+    }
+
+    .narrative {
+        @apply text-[17px] leading-[1.8] max-w-[650px] font-serif;
+    }
+
+    .dialogue-h {
+        color: #a0c4ff;
+        @apply mt-5 pl-5;
+        border-left: 1px solid rgba(160, 196, 255, 0.3);
+    }
+
+    .gauge-panel {
+        background: rgba(10, 10, 15, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        @apply p-5 flex flex-row flex-wrap justify-around items-center gap-6 mt-6;
+    }
+
+    .gauge-item {
+        @apply flex flex-col gap-2 min-w-[180px] flex-1;
+    }
+
+    .gauge-label {
+        @apply font-mono text-[11px] uppercase flex justify-between text-text-main;
+    }
+
+    .bar-container {
+        height: 6px;
+        background: #222;
+        width: 100%;
+        position: relative;
+    }
+
+    .bar-fill {
+        height: 100%;
+        background: var(--color-text-main);
+    }
+
+    .bar-fill.danger { background: var(--color-accent-red); }
+    .bar-fill.ally { background: var(--color-accent-blue); }
+    .bar-fill.health { background: #4caf50; }
+
+    .location-tag {
+        @apply font-mono text-[14px] mb-5 block;
+        color: #ffd700;
+    }
+
+    .options-grid {
+        @apply grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 w-full;
+    }
+
+    .opt-btn {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: var(--color-text-main);
+        @apply p-3 font-serif text-left cursor-pointer text-[14px] transition-colors duration-200;
+    }
+
+    .opt-btn span {
+        color: var(--color-accent-red);
+        @apply mr-2 font-mono;
+    }
+
+    .opt-btn:hover {
+        background: rgba(255,255,255,0.05);
+        border-color: white;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-dim);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-red);
+}
+
+/* Glitch animation for the hero title */
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 1px) }
+  40% { transform: translate(-1px, -1px) }
+  60% { transform: translate(2px, 1px) }
+  80% { transform: translate(1px, -1px) }
+  100% { transform: translate(0) }
+}
+.glitch-hover:hover {
+  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+  color: var(--color-accent-red);
+}
+
